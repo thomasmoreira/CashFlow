@@ -1,14 +1,14 @@
 # 🎯 API Fluxo Caixa
-Este é um projeto de API RESTful para gerenciamento de fluxo de caixa de uma empresa. Com ele, é possível cadastrar lançamentos de crédito e débito e verificar o saldo diário.
+Serviço para gerenciamento de fluxo de caixa. Com ele, é possível cadastrar lançamentos de crédito e débito e consultar o saldo diário.
 
 ## 🔨 Desenho da arquitetura
 ![api-fluxo-caixa drawio](https://user-images.githubusercontent.com/12766450/236968499-3a6b8f77-1b4e-43ab-bc54-f95e3e5b837c.png)
 
 ## Padrões de microserviço utilizados
-* Separação em camadas (Controller, Service e Repository)
-* Injeção de dependências com Spring
-* Uso de DTOs para transferência de dados entre a API e o banco de dados
-
+* Separação em camadas
+* Injeção de dependências
+* DTOs
+  
 ## Padrões de projetos utilizados
 - `Strategy`: utilizado para implementar diferentes formas de cálculo do saldo diário.
 - `Repository`: utilizado para abstrair a camada de acesso ao banco de dados.
@@ -38,10 +38,9 @@ Este é um projeto de API RESTful para gerenciamento de fluxo de caixa de uma em
 - `GET /saldo-consolidado/{data}`: endpoint para calcular o saldo diário de uma determinada data.
 
 ## 🛠️ Execução do projeto
-Para executar o projeto, é necessário ter o Java 17 e o Maven instalados.
+Para executar o projeto, é necessário ter o Docker e o Docker Compose instalados.
 
 ## 🚀 Como usar
-Para usar a API, é necessário ter o Docker e o Docker Compose instalados.
 ## Clone o repositório:
 
 ```
