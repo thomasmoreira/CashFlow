@@ -14,18 +14,10 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public async Task<User> AddAsync(User user, CancellationToken cancellationToken = default)
-    {
-        _context.Set<User>().Add(user);
-
-        await _context.SaveChangesAsync(cancellationToken);
-
-        return user;
-    }
 
     public async Task<User?> GetBySpecAsync(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken = default)
     {
-        return await _context.Set<User>().FirstOrDefaultAsync(u => u.Email == "teste");
+        return await _context.Set<User>().FirstOrDefaultAsync(predicate);
     }
 
     public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
@@ -33,8 +25,11 @@ public class UserRepository : IUserRepository
         return await _context.Set<User>().FindAsync(new object[] { id }, cancellationToken: cancellationToken);
     }
 
-    public Task<IList<User>> ListAsync(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken = default)
+    public async Task<IQueryable<User>> GetAllAsync(bool asNoTracking = true, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        if (asNoTracking)
+            return _context.Set<User>().AsNoTracking();
+        else
+            return _context.Set<User>().AsQueryable(); ;
     }
 }

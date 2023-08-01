@@ -14,8 +14,12 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using JSM.FluentValidation.AspNet.AsyncFilter;
 using CashFlow.Application.Common;
-using CashFlow.Application.Middlewares;
 using CashFlow.Application.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using CashFlow.Api.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,11 +41,30 @@ IWebHostEnvironment environment = builder.Environment;
 
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
-
 builder.Services.AddControllers().AddModelValidationAsyncActionFilter()
     .ConfigureApiBehaviorOptions(options =>
     {
         options.SuppressModelStateInvalidFilter = true;
+    });
+
+var key = Encoding.ASCII.GetBytes(Settings.Secret);
+builder.Services.AddAuthentication(o =>
+{
+    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(o =>
+    {
+        o.RequireHttpsMetadata = false;
+        o.SaveToken = true;
+        o.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+
+        };
     });
 
 builder.Services.AddEndpointsApiExplorer();
@@ -87,16 +110,15 @@ app.UseRequestLocalization(new RequestLocalizationOptions
 
 if (app.Environment.IsDevelopment())
 {
-    //// ensure database is created
-    //var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope();
-    //var db = serviceScope?.ServiceProvider.GetRequiredService<CashFlowDbContext>();
-    //db?.Database.EnsureCreated();
-    //DataInitializer.Run(db);
+    // ensure database is created
+    var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope();
+    var db = serviceScope?.ServiceProvider.GetRequiredService<CashFlowDbContext>();
+    db?.Database.EnsureCreated();
+    DataInitializer.Run(db);
 
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseMiddleware<JwtMiddleware>();
 
 app.UseExceptionHandler(appBuilder =>
 {
@@ -124,9 +146,10 @@ app.UseExceptionHandler(appBuilder =>
         await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
     });
 });
-//app.UseMiddleware<JwtMiddleware>();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllers();
 

@@ -1,8 +1,8 @@
-﻿using CashFlow.Application.Attributes;
-using CashFlow.Application.Dtos;
+﻿using CashFlow.Application.Dtos;
 using CashFlow.Application.Services.Interfaces;
 using CashFlow.Application.Validations;
 using CashFlow.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CashFlow.Api.Controllers
@@ -18,9 +18,9 @@ namespace CashFlow.Api.Controllers
         {
             _accountService = accountService;
         }
-
-        [Authorize(ERole.Admin)]
+        
         [HttpPost]
+        [Authorize(Roles = "manager")]
         [ProducesResponseType(typeof(AddAccountResponseDto), StatusCodes.Status201Created)]
         public async Task<IActionResult> AddAccount([FromBody] AddAccountDto account)
         {
@@ -37,9 +37,9 @@ namespace CashFlow.Api.Controllers
             var result = await _accountService.AddAccount(account);
             return result is not null ? Created("", result) : BadRequest();
         }
-
-        [AllowAnonymous]
+        
         [HttpGet]
+        [Authorize(Roles = "employee, manager")]
         [ProducesResponseType(typeof(IList<AccountResponseDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAccounts()
         {
@@ -48,6 +48,7 @@ namespace CashFlow.Api.Controllers
         }
 
         [HttpGet("{id:guid}")]
+        [Authorize(Roles = "employee, manager")]
         [ProducesResponseType(typeof(IList<AccountResponseDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAccount([FromRoute] Guid id)
         {

@@ -1,31 +1,29 @@
-﻿using CashFlow.Application.Common;
+﻿using CashFlow.Api.Security;
+using CashFlow.Application.Common;
 using CashFlow.Application.Dtos;
 using CashFlow.Application.Exceptions;
 using CashFlow.Application.Services.Interfaces;
+using static BCrypt.Net.BCrypt;
 
 namespace CashFlow.Application.Services
 {
     public class AuthService : IAuthService
     {
         private readonly IUserService _userService;
-        private IJwtUtils _jwtUtils;
 
-        public AuthService(IUserService userService, IJwtUtils jwtUtils)
+        public AuthService(IUserService userService)
         {
             _userService = userService;
-            _jwtUtils = jwtUtils;
         }
 
         public async Task<AuthenticateResponse> Authenticate(LoginRequest loginRequest)
         {
-            var user = await _userService.GetByEmailAsync(loginRequest.email);
+            var user = await _userService.GetByUsernameAsync(loginRequest.email);
 
-            // validate
-            if (user == null /*|| !BCrypt.Verify(loginRequest.password, user.PasswordHash)*/)
-                throw new BadRequestException("Username or password is incorrect");
+            if (user == null || !Verify(loginRequest.password, user.PasswordHash))
+                throw new BadRequestException("Usuário ou senha inválidos");
 
-            // authentication successful so generate jwt token
-            var jwtToken = _jwtUtils.GenerateJwtToken(user);
+            var jwtToken = TokenService.GenerateToken(user);
 
             return new AuthenticateResponse(user, jwtToken);
         }

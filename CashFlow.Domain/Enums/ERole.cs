@@ -1,8 +1,12 @@
-﻿namespace CashFlow.Domain.Enums
+﻿using System.ComponentModel;
+
+namespace CashFlow.Domain.Enums
 {
     public enum ERole
     {
-        Admin,
-        User
+        [Description("manager")]
+        Manager,
+        [Description("employee")]
+        Employee
     }
 }

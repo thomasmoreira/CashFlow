@@ -1,6 +1,7 @@
-﻿using CashFlow.Domain.Entities;
+﻿using BCrypt.Net;
+using CashFlow.Domain.Entities;
 using CashFlow.Domain.Enums;
-using CashFlow.Infra.Common;
+using static BCrypt.Net.BCrypt;
 
 namespace CashFlow.Infra.Persistence
 {
@@ -15,17 +16,17 @@ namespace CashFlow.Infra.Persistence
             // create user
             var joanna = new User
             {
-                Email = "joanna",
-                PasswordHash = "joanna",
-                Role = ERole.Admin
+                Username = "admin",
+                PasswordHash = HashPassword("Pass@word123!"),
+                Role = ERole.Manager
             };
             db.Users.Add(joanna);
 
             var natasha = new User
             {
-                Email = "natasha",
-                PasswordHash = "natasha",
-                Role = ERole.User
+                Username = "user",
+                PasswordHash = HashPassword("123456"),
+                Role = ERole.Employee
             };
             db.Users.Add(natasha);
 
