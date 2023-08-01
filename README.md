@@ -50,14 +50,12 @@ A interface do Seq estará disponível em http://localhost:5341
 ## 🔑 Autenticação por token
 Para utilizar as funcionalidades da API, é necessário realizar a autenticação e obter um token JWT.
 
-Endpoint de autenticação:
-POST /login
 ```
-Body:
-{
-    "username": "Paulo",
-    "password": "1234"
-}
+username: admin
+password: Pass@word123!
+
+username: user
+password: 123456
 ```
 
 A resposta será um token JWT, que deve ser incluído no header das requisições que exigem autenticação, no formato "Bearer {token}".
