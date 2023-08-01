@@ -61,3 +61,6 @@ password: 123456
 ```
 
 A resposta será um token JWT, que deve ser incluído no header das requisições que exigem autenticação, no formato "Bearer {token}".
+
+## 🔑 Próximos passos
+
