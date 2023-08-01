@@ -1,4 +1,4 @@
-# 🎯 API Fluxo Caixa
+# 🎯 Fluxo Caixa
 Serviço para gerenciamento de fluxo de caixa. Com ele, é possível cadastrar lançamentos de crédito e débito e consultar o saldo diário.
 
 ## 🔨 Desenho da arquitetura
