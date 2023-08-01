@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace CashFlow.Infra.Persistence.Interfaces
+namespace CashFlow.Application.Repositories
 {
     public interface IBaseRepository<TEntity> where TEntity : class
     {

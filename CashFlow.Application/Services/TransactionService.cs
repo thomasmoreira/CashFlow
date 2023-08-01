@@ -1,4 +1,5 @@
 ﻿using CashFlow.Application.Dtos;
+using CashFlow.Application.Extensions;
 using CashFlow.Application.Repositories;
 using CashFlow.Application.Services.Interfaces;
 using CashFlow.Domain.Entities;
@@ -8,24 +9,25 @@ using Serilog.Context;
 namespace CashFlow.Application.Services
 {
     public class TransactionService : ITransactionService
-    {
-        private readonly ITransactionRespository _repository;
+    {        
+        private readonly IBaseRepository<Transaction> _transactionRepository;
+
         private ILogger _logger = Log.ForContext<TransactionService>();
 
-        public TransactionService(ITransactionRespository repository)
-        {
-            _repository = repository;
+        public TransactionService(IBaseRepository<Transaction> transactionRepository)
+        {            
+            _transactionRepository = transactionRepository;
         }
 
         public async Task<Guid> AddTransaction(AddTransactionDto transactionDto)
         {
-            LogContext.PushProperty("Transaction", transactionDto);
+            LogContext.PushProperty("Transaction", transactionDto.ToJson());
 
             _logger.Information("Criando nova transação");
 
             Transaction transaction = (Transaction)transactionDto;
 
-            var addedTransaction = await _repository.AddAsync(transaction);
+            var addedTransaction = await _transactionRepository.AddAsync(transaction);
 
             if (addedTransaction is null) 
             {
@@ -39,21 +41,15 @@ namespace CashFlow.Application.Services
 
         public async Task<TransactionResponseDto> GetTransaction(Guid id)
         {
-            var result = await _repository.GetById(id);
+            var result = await _transactionRepository.GetByIdAsync(id);
             TransactionResponseDto transaction = (TransactionResponseDto)result;
 
             return transaction;
         }
 
-        public async Task<ICollection<TransactionResponseDto>> GetTransactions()
-        {
-            var result = await _repository.GetAll();
-            return result.Select<Transaction, TransactionResponseDto>(t => t).ToList();
-
-        }
         public async Task<ICollection<TransactionResponseDto>> GetTransactions(DateTime date)
         {
-            var result = await _repository.ListAsync(t => t.TransactionDate.Date == date.Date);
+            var result = await _transactionRepository.ListAsync(t => t.TransactionDate.Date == date.Date);
             return result.Select<Transaction, TransactionResponseDto>(t => t).ToList();
 
         }

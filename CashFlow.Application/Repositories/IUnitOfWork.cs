@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 
-namespace CashFlow.Infra.Persistence.Interfaces
+namespace CashFlow.Application.Repositories
 {
     public interface IUnitOfWork
     {

@@ -1,6 +1,5 @@
 ﻿using CashFlow.Application.Repositories;
 using CashFlow.Infra.Persistence;
-using CashFlow.Infra.Persistence.Interfaces;
 using CashFlow.Infra.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,8 +12,6 @@ namespace CashFlow.Infra.Extensions
         public static IServiceCollection PersistenceConfig(this IServiceCollection services, IConfiguration configuration) 
         {
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            services.AddScoped<ITransactionRespository, TransactionRepository>();            
-            services.AddScoped<IUserRepository, UserRepository>();
 
             var host = configuration["DBHOST"] ?? "localhost";
             var port = configuration["DBPORT"] ?? "3306";

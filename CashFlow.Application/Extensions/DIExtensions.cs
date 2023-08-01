@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CashFlow.Application.Validations.Attributes;
-using FluentValidation.AspNetCore;
 
 namespace CashFlow.Application.Extensions
 {
@@ -18,8 +17,7 @@ namespace CashFlow.Application.Extensions
             services.AddControllers(o => { o.Filters.Add<ValidateModelStateAttribute>(); })
                 .ConfigureApiBehaviorOptions(options =>
                 {
-                    options.SuppressModelStateInvalidFilter = true;
-
+                    options.SuppressModelStateInvalidFilter = true;                    
                 });
 
             services.AddEndpointsApiExplorer();

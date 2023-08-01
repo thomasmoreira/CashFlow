@@ -1,4 +1,4 @@
-﻿using CashFlow.Infra.Persistence.Interfaces;
+﻿using CashFlow.Application.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

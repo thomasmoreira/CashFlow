@@ -30,7 +30,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ITransactionRespository, TransactionRepository>();
+builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 var host = configuration["DBHOST"] ?? "localhost";

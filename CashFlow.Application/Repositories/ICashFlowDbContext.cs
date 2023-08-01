@@ -1,7 +1,7 @@
 ﻿using CashFlow.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace CashFlow.Infra.Persistence.Interfaces
+namespace CashFlow.Application.Repositories
 {
     public interface ICashFlowDbContext : IUnitOfWork
     {

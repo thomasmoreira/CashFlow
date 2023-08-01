@@ -3,32 +3,21 @@ using CashFlow.Application.Services.Interfaces;
 using CashFlow.Domain.Entities;
 
 namespace CashFlow.Application.Services
-{    
+{
     public class UserService : IUserService
     {
-        private readonly IUserRepository _repository;
+        private readonly IBaseRepository<User> _userRepository;
 
-        public UserService(IUserRepository repository)
+        public UserService(IBaseRepository<User> userRepository)
         {
-            _repository = repository;
+            _userRepository = userRepository;
         }
 
         public async Task<User?> GetByUsernameAsync(string username)
         {
-            var result = await _repository.GetBySpecAsync(u => u.Username == username);
+            var result = await _userRepository.GetBySpecAsync<User>(u => u.Username == username);
             return result;
-        }
+        }        
 
-        public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        {
-            var result = await _repository.GetByIdAsync(id);
-            return result;
-        }
-
-        public async Task<IQueryable<User>> GetAllAsync(bool asNoTracking = true, CancellationToken cancellationToken = default)
-        {
-            return await _repository.GetAllAsync();
-        }
-      
     }
 }

@@ -1,10 +1,11 @@
 ﻿using CashFlow.Application.Dtos;
+using CashFlow.Application.Extensions;
 using CashFlow.Application.Services.Interfaces;
 using CashFlow.Application.Validations;
-using CashFlow.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
+using Serilog;
+using ILogger = Serilog.ILogger;
 
 namespace CashFlow.Api.Controllers
 {
@@ -14,6 +15,7 @@ namespace CashFlow.Api.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
+        private ILogger _logger = Log.ForContext<TransactionController>();
 
         public TransactionController(ITransactionService transactionService)
         {
@@ -28,8 +30,18 @@ namespace CashFlow.Api.Controllers
             var transactionValidator = new AddTransactionValidator();
             var resultValidator = transactionValidator.Validate(transaction);
 
-            if (!resultValidator.IsValid)
-                return BadRequest(resultValidator.Errors.Select(e => new { e.ErrorMessage }).ToList());
+            if (!resultValidator.IsValid) 
+            {
+                var errors = resultValidator.Errors.Select(e => e.ErrorMessage).ToList();
+
+                _logger.ForContext("Errors", errors.ToJson())
+                    .Error("Modelo inválido");
+
+                return new BadRequestObjectResult(new
+                {
+                    notifications = errors
+                });
+            }                
 
             var result = await _transactionService.AddTransaction(transaction);
 
@@ -39,9 +51,9 @@ namespace CashFlow.Api.Controllers
         [HttpGet]
         [Authorize(Roles = "employee, manager")]
         [ProducesResponseType(typeof(IList<TransactionResponseDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetTransactions() 
+        public async Task<IActionResult> GetTransactions([FromQuery] DateTime date) 
         {
-            var result = await _transactionService.GetTransactions();
+            var result = await _transactionService.GetTransactions(date);
             return Ok(result);
         }
 
@@ -52,5 +64,6 @@ namespace CashFlow.Api.Controllers
         {
             return Ok();
         }      
+
     }
 }

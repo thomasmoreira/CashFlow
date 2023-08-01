@@ -1,9 +1,7 @@
-﻿using CashFlow.Domain.Entities;
-using CashFlow.Infra.Persistence.Configuration;
-using CashFlow.Infra.Persistence.Interfaces;
+﻿using CashFlow.Application.Repositories;
+using CashFlow.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using System.Reflection;
 
 namespace CashFlow.Infra.Persistence
 {
@@ -32,9 +30,6 @@ namespace CashFlow.Infra.Persistence
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            //builder.ApplyConfiguration(new TransactionConfiguration());
-            //builder.ApplyConfiguration(new AccountConfiguration());
 
             base.OnModelCreating(builder);
         }

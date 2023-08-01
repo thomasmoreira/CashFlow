@@ -6,7 +6,6 @@ namespace CashFlow.Application.Services.Interfaces
     {
         Task<Guid> AddTransaction(AddTransactionDto transaction);
         Task<ICollection<TransactionResponseDto>> GetTransactions(DateTime date);
-        Task<ICollection<TransactionResponseDto>> GetTransactions();
         Task<TransactionResponseDto> GetTransaction(Guid id);
 
     }
