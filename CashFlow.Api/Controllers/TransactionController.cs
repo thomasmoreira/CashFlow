@@ -32,6 +32,7 @@ namespace CashFlow.Api.Controllers
                 return BadRequest(resultValidator.Errors.Select(e => new { e.ErrorMessage }).ToList());
 
             var result = await _transactionService.AddTransaction(transaction);
+
             return Ok(result);
         }
 
