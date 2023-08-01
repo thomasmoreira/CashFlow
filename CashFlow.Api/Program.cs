@@ -1,16 +1,12 @@
 using FluentValidation;
 using CashFlow.Application.Validations;
 using CashFlow.Application.Exceptions;
-using Microsoft.AspNetCore.Diagnostics;
-using System.Net;
-using System.Text.Json;
 using CashFlow.Infra.Persistence;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using CashFlow.Application.Extensions;
 using CashFlow.Infra.Extensions;
 using Serilog;
-using Serilog.Events;
 
 try
 {
@@ -39,11 +35,7 @@ try
             .ReadFrom.Configuration(ctx.Configuration)
             .Enrich.FromLogContext()
             .Enrich.WithProperty("ApplicationName", typeof(Program).Assembly.GetName().Name)
-            .Enrich.WithProperty("Environment", ctx.HostingEnvironment);            
-
-//#if DEBUG
-//        loggerConfiguration.Enrich.WithProperty("DebuggerAttached", Debugger.IsAttached);
-//#endif
+            .Enrich.WithProperty("Environment", ctx.HostingEnvironment);
     });
 
     builder.Services.AddLogging();
@@ -79,39 +71,14 @@ try
         app.UseSwaggerUI();
     }
 
-    app.UseExceptionHandler(appBuilder =>
-    {
-        appBuilder.Run(async context =>
-        {
-            var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-            if (contextFeature == null) return;
-
-            context.Response.StatusCode = contextFeature.Error switch
-            {
-                OperationCanceledException => (int)HttpStatusCode.ServiceUnavailable,
-                BadRequestException => (int)HttpStatusCode.BadRequest,
-                //NotFoundException => (int)HttpStatusCode.NotFound,
-                ForbiddenException => (int)HttpStatusCode.Forbidden,
-                UnauthorizedException => (int)HttpStatusCode.Unauthorized,
-                _ => (int)HttpStatusCode.InternalServerError
-            };
-
-            var errorResponse = new
-            {
-                statusCode = context.Response.StatusCode,
-                message = contextFeature.Error.GetBaseException().Message
-            };
-
-            await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
-        });
-    });
-
     app.UseSerilogRequestLogging();
 
     app.UseAuthentication();
     app.UseAuthorization();
 
     app.MapControllers();
+
+    app.UseMiddleware<ErrorHandlingMiddleware>();
 
     app.Run();
 }
