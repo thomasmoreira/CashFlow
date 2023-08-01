@@ -17,10 +17,12 @@ Serviço para gerenciamento de fluxo de caixa. Com ele, é possível cadastrar l
 - `DTO`: utilizado para transferência de dados entre as camadas.
 
 
-## ✔️ Tecnologias e bibliotecas usadas
+## ✔️ Tecnologias, recursos e bibliotecas usadas
 - ``Aspnet Core 6``
 - ``EF Core 7``
+- ``MySql``
 - ``Serilog``
+- ``Seq``
 - ``Fluent Validation``
 - ``JWT``
 - ``Swagger 3``
