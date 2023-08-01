@@ -47,6 +47,17 @@ services:
       - DBHOST=database
       - ASPNETCORE_ENVIRONMENT=Development
 
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    volumes:
+      - datadrive:/data
+    environment:
+          - ACCEPT_EULA=Y
+    restart: unless-stopped    
+    ports:
+      - 5341:80
 
 volumes:
    db-volume:
+   datadrive: 
