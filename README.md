@@ -10,8 +10,9 @@ Serviço para gerenciamento de fluxo de caixa. Com ele, é possível cadastrar l
 * DTOs
   
 ## Padrões de projetos utilizados
-- `Strategy`: utilizado para implementar diferentes formas de cálculo do saldo diário.
+
 - `Repository`: utilizado para abstrair a camada de acesso ao banco de dados.
+- `Generic Repository`: Utlizado para permitir o reuso de recursos para acesso ao banco dados.
 - `DTO`: utilizado para transferência de dados entre as camadas.
 
 
@@ -29,14 +30,6 @@ Serviço para gerenciamento de fluxo de caixa. Com ele, é possível cadastrar l
 - ``Mockito``
 - ``ModelMapper``
 
-## Endpoints
-- `POST /login`: endpoint para realizar a autenticação de um usuário e gerar um token JWT.
-- `POST /lancamentos`: endpoint para adicionar um novo lançamento.
-- `GET /lancamentos/{id}`: endpoint para buscar um lançamento por id.
-- `GET /lancamentos`: endpoint para listar todos os lançamentos.
-- `GET /lancamentos?data={data}`: endpoint para listar todos os lançamentos de uma determinada data.
-- `GET /saldo-consolidado/{data}`: endpoint para calcular o saldo diário de uma determinada data.
-
 ## 🛠️ Execução do projeto
 Para executar o projeto, é necessário ter o Docker e o Docker Compose instalados.
 
@@ -44,21 +37,18 @@ Para executar o projeto, é necessário ter o Docker e o Docker Compose instalad
 ## Clone o repositório:
 
 ```
-git clone https://github.com/pauloruszel/controle-fluxo-caixa.git
+git clone https://github.com/thomasmoreira/CashFlow.git
 ```
 ## 📁 Entre na pasta do projeto:
 ```
-cd controle-fluxo-caixa
-```
-### Execute o comando abaixo para compilar e empacotar o projeto:
-```bash
-mvn clean package
+cd CashFlow
 ```
 ## 🐳 Execute o docker-compose:
 ```bash
 docker-compose up --build
 ```
-A API estará disponível em http://localhost:8080.
+O serviço de lançamentos estará disponível em http://localhost:8000/swagger.
+O serviço de relatórios estará disponível em http://localhost:8081/swagger.
 
 ## 🔑 Autenticação por token
 Para utilizar as funcionalidades da API, é necessário realizar a autenticação e obter um token JWT.
@@ -68,7 +58,7 @@ POST /login
 ```
 Body:
 {
-    "login": "Paulo",
+    "username": "Paulo",
     "password": "1234"
 }
 ```
