@@ -13,12 +13,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using JSM.FluentValidation.AspNet.AsyncFilter;
-using CashFlow.Application.Common;
 using CashFlow.Application.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.AspNetCore.Authorization;
 using CashFlow.Api.Security;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,8 +36,6 @@ var supportedCultures = new[] { newCulture };
 
 ConfigurationManager configuration = builder.Configuration;
 IWebHostEnvironment environment = builder.Environment;
-
-builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 builder.Services.AddControllers().AddModelValidationAsyncActionFilter()
     .ConfigureApiBehaviorOptions(options =>
@@ -81,9 +77,7 @@ builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 
-//builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining(typeof(Validator<>));
 
 var host = configuration["DBHOST"] ?? "localhost";

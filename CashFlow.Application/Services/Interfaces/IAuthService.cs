@@ -1,10 +1,9 @@
-﻿using CashFlow.Application.Common;
-using CashFlow.Application.Dtos;
+﻿using CashFlow.Application.Dtos;
 
 namespace CashFlow.Application.Services.Interfaces
 {
     public interface IAuthService
     {
-        Task<AuthenticateResponse> Authenticate(LoginRequest loginRequest);
+        Task<AuthenticateResponseDto> Authenticate(LoginRequest loginRequest);
     }
 }

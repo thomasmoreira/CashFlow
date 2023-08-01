@@ -1,5 +1,4 @@
-﻿using CashFlow.Application.Common;
-using CashFlow.Application.Dtos;
+﻿using CashFlow.Application.Dtos;
 using CashFlow.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +22,7 @@ namespace CashFlow.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        [ProducesResponseType(typeof(AuthenticateResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(AuthenticateResponseDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> AuthenticateAsync([FromBody] LoginRequest loginRequest)
         {
             var result = await _authService.Authenticate(loginRequest);

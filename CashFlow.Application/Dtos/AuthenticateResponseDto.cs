@@ -2,16 +2,16 @@
 using CashFlow.Domain.Enums;
 using CashFlow.Domain.Extensions;
 
-namespace CashFlow.Application.Common
+namespace CashFlow.Application.Dtos
 {
-    public class AuthenticateResponse
+    public class AuthenticateResponseDto
     {
         public Guid UserId { get; set; }
         public string Username { get; set; }
         public string Role { get; set; }
         public string Token { get; set; }
 
-        public AuthenticateResponse(User user, string token)
+        public AuthenticateResponseDto(User user, string token)
         {
             UserId = user.Id;
             Username = user.Username;

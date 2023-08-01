@@ -1,5 +1,4 @@
 ﻿using CashFlow.Api.Security;
-using CashFlow.Application.Common;
 using CashFlow.Application.Dtos;
 using CashFlow.Application.Exceptions;
 using CashFlow.Application.Services.Interfaces;
@@ -16,7 +15,7 @@ namespace CashFlow.Application.Services
             _userService = userService;
         }
 
-        public async Task<AuthenticateResponse> Authenticate(LoginRequest loginRequest)
+        public async Task<AuthenticateResponseDto> Authenticate(LoginRequest loginRequest)
         {
             var user = await _userService.GetByUsernameAsync(loginRequest.email);
 
@@ -25,7 +24,7 @@ namespace CashFlow.Application.Services
 
             var jwtToken = TokenService.GenerateToken(user);
 
-            return new AuthenticateResponse(user, jwtToken);
+            return new AuthenticateResponseDto(user, jwtToken);
         }
     }
 }
