@@ -21,16 +21,16 @@ namespace CashFlow.Api.Controllers
         [AllowAnonymous]
         [HttpPost("login")]
         [ProducesResponseType(typeof(AuthenticateResponseDto), StatusCodes.Status200OK)]
-        public async Task<IActionResult> AuthenticateAsync([FromBody] LoginRequest loginRequest)
+        public async Task<IActionResult> AuthenticateAsync([FromBody] LoginRequestDto loginRequest)
         {
-            _logger.LogInformation($"Usuário {loginRequest.email} solicitando autenticação");
+            _logger.LogInformation($"Usuário {loginRequest.username} solicitando autenticação");
 
             var result = await _authService.Authenticate(loginRequest);
 
             if (result is null)
-                _logger.LogInformation($"Tentativa de autenticação inválida para o usuário {loginRequest.email}");
+                _logger.LogInformation($"Tentativa de autenticação inválida para o usuário {loginRequest.username}");
 
-            _logger.LogInformation($"Autenticação realizada com sucesso para ao usuário {loginRequest.email}");
+            _logger.LogInformation($"Autenticação realizada com sucesso para ao usuário {loginRequest.username}");
 
             return Ok(result);
         }

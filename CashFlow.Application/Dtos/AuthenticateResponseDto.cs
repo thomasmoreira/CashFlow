@@ -1,5 +1,4 @@
 ﻿using CashFlow.Domain.Entities;
-using CashFlow.Domain.Enums;
 using CashFlow.Domain.Extensions;
 
 namespace CashFlow.Application.Dtos
