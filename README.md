@@ -37,21 +37,18 @@ Para executar o projeto, é necessário ter o Docker e o Docker Compose instalad
 ## Clone o repositório:
 
 ```
-git clone https://github.com/pauloruszel/controle-fluxo-caixa.git
+git clone https://github.com/thomasmoreira/CashFlow.git
 ```
 ## 📁 Entre na pasta do projeto:
 ```
-cd controle-fluxo-caixa
-```
-### Execute o comando abaixo para compilar e empacotar o projeto:
-```bash
-mvn clean package
+cd CashFlow
 ```
 ## 🐳 Execute o docker-compose:
 ```bash
 docker-compose up --build
 ```
-A API estará disponível em http://localhost:8080.
+O serviço de lançamentos estará disponível em http://localhost:8000/swagger.
+O serviço de relatórios estará disponível em http://localhost:8081/swagger.
 
 ## 🔑 Autenticação por token
 Para utilizar as funcionalidades da API, é necessário realizar a autenticação e obter um token JWT.
@@ -61,7 +58,7 @@ POST /login
 ```
 Body:
 {
-    "login": "Paulo",
+    "username": "Paulo",
     "password": "1234"
 }
 ```
