@@ -10,8 +10,9 @@ Serviço para gerenciamento de fluxo de caixa. Com ele, é possível cadastrar l
 * DTOs
   
 ## Padrões de projetos utilizados
-- `Strategy`: utilizado para implementar diferentes formas de cálculo do saldo diário.
+
 - `Repository`: utilizado para abstrair a camada de acesso ao banco de dados.
+- `Generic Repository`: Utlizado para permitir o reuso de recursos para acesso ao banco dados.
 - `DTO`: utilizado para transferência de dados entre as camadas.
 
 
@@ -28,14 +29,6 @@ Serviço para gerenciamento de fluxo de caixa. Com ele, é possível cadastrar l
 - ``JUnit 5``
 - ``Mockito``
 - ``ModelMapper``
-
-## Endpoints
-- `POST /login`: endpoint para realizar a autenticação de um usuário e gerar um token JWT.
-- `POST /lancamentos`: endpoint para adicionar um novo lançamento.
-- `GET /lancamentos/{id}`: endpoint para buscar um lançamento por id.
-- `GET /lancamentos`: endpoint para listar todos os lançamentos.
-- `GET /lancamentos?data={data}`: endpoint para listar todos os lançamentos de uma determinada data.
-- `GET /saldo-consolidado/{data}`: endpoint para calcular o saldo diário de uma determinada data.
 
 ## 🛠️ Execução do projeto
 Para executar o projeto, é necessário ter o Docker e o Docker Compose instalados.
