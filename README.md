@@ -59,15 +59,3 @@ password: 123456
 ```
 
 A resposta será um token JWT, que deve ser incluído no header das requisições que exigem autenticação, no formato "Bearer {token}".
-## Testes unitários
-Para rodar os testes unitários, execute o comando abaixo:
-
-```
-mvn test
-```
-![testes unitarios](https://github.com/pauloruszel/controle-fluxo-caixa/assets/12766450/30cddadd-240e-4fe1-a2ac-d14a4f6af84d)
-
-## Observability
-A aplicação possui o Spring Boot Actuator configurado para expor os endpoints /health, /info e /metrics na porta 1979. 
-Para acessá-los, utilize o seguinte endereço: 
-* http://localhost:1979/actuator/health.
