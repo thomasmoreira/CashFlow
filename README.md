@@ -18,18 +18,13 @@ Serviço para gerenciamento de fluxo de caixa. Com ele, é possível cadastrar l
 
 
 ## ✔️ Tecnologias e bibliotecas usadas
-- ``Java 17``
-- ``Spring Boot 3``
-- ``Spring Data JPA``
-- ``Spring Security``
-- ``Spring Boot Actuator``
+- ``Aspnet Core 6``
+- ``EF Core 7``
+- ``Serilog``
+- ``Fluent Validation``
 - ``JWT``
-- ``H2 Database``
 - ``Swagger 3``
-- ``Lombok``
-- ``JUnit 5``
-- ``Mockito``
-- ``ModelMapper``
+- ``NUnit``
 
 ## 🛠️ Execução do projeto
 Para executar o projeto, é necessário ter o Docker e o Docker Compose instalados.
