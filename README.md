@@ -41,10 +41,11 @@ cd CashFlow
 ```
 ## 🐳 Execute o docker-compose:
 ```bash
-docker-compose up --build
+docker-compose up
 ```
 O serviço de lançamentos estará disponível em http://localhost:8000/swagger.
 O serviço de relatórios estará disponível em http://localhost:8081/swagger.
+A interface do Seq estará disponível em http://localhost:5341
 
 ## 🔑 Autenticação por token
 Para utilizar as funcionalidades da API, é necessário realizar a autenticação e obter um token JWT.
