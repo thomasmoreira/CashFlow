@@ -13,6 +13,7 @@ Serviço para gerenciamento de fluxo de caixa. Com ele, é possível cadastrar l
 
 - `Repository`: utilizado para abstrair a camada de acesso ao banco de dados.
 - `Generic Repository`: Utlizado para permitir o reuso de recursos para acesso ao banco dados.
+- `Unit Of Work`: Utlizado para permitir o reuso de recursos para acesso ao banco dados.
 - `DTO`: utilizado para transferência de dados entre as camadas.
 
 
