@@ -1,12 +1,12 @@
 ﻿using CashFlow.Api.Security;
-using CashFlow.Application.Repositories;
 using CashFlow.Application.Services.Interfaces;
 using CashFlow.Application.Services;
-using JSM.FluentValidation.AspNet.AsyncFilter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using CashFlow.Application.Validations.Attributes;
+using FluentValidation.AspNetCore;
 
 namespace CashFlow.Application.Extensions
 {
@@ -15,16 +15,16 @@ namespace CashFlow.Application.Extensions
         public static IServiceCollection ApplicationConfig(this IServiceCollection services) 
         {                              
 
-            services.AddControllers().AddModelValidationAsyncActionFilter()
+            services.AddControllers(o => { o.Filters.Add<ValidateModelStateAttribute>(); })
                 .ConfigureApiBehaviorOptions(options =>
                 {
                     options.SuppressModelStateInvalidFilter = true;
+
                 });
 
             services.AddEndpointsApiExplorer();
 
-            services.AddScoped<ITransactionService, TransactionService>();
-            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ITransactionService, TransactionService>();            
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
 

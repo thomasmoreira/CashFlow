@@ -16,13 +16,7 @@ namespace CashFlow.Infra.Persistence
 
         #region DbSets
 
-        public DbSet<Transaction> Transactions => Set<Transaction>();
-        public DbSet<Account> Accounts => Set<Account>();
-
-        public DbSet<RolePrivilege> RolePrivileges => Set<RolePrivilege>();
-
-        public DbSet<Role> Roles => Set<Role>();
-
+        public DbSet<Transaction> Transactions => Set<Transaction>();        
         public DbSet<User> Users => Set<User>();
 
         #endregion

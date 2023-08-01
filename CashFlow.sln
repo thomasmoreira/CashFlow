@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Infra", "CashFlow.
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{33D6F5D7-C53D-49A0-9AAB-EE5B303C75F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashFlow.Report.Api", "CashFlow.Report.Api\CashFlow.Report.Api.csproj", "{57E8C096-CDB4-4D37-BD2F-801E1B27E088}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Report.Api", "CashFlow.Report.Api\CashFlow.Report.Api.csproj", "{57E8C096-CDB4-4D37-BD2F-801E1B27E088}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

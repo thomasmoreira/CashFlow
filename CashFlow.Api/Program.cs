@@ -1,5 +1,3 @@
-using FluentValidation;
-using CashFlow.Application.Validations;
 using CashFlow.Application.Exceptions;
 using CashFlow.Infra.Persistence;
 using Microsoft.AspNetCore.Localization;
@@ -7,10 +5,11 @@ using System.Globalization;
 using CashFlow.Application.Extensions;
 using CashFlow.Infra.Extensions;
 using Serilog;
+using FluentValidation;
+using CashFlow.Application.Validations;
 
 try
 {
-
     var builder = WebApplication.CreateBuilder(args);
 
     ConfigurationManager configuration = builder.Configuration;
@@ -61,7 +60,6 @@ try
 
     if (app.Environment.IsDevelopment())
     {
-        // ensure database is created
         var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope();
         var db = serviceScope?.ServiceProvider.GetRequiredService<CashFlowDbContext>();
         db?.Database.EnsureCreated();

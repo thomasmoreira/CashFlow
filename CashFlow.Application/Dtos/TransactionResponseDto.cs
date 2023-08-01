@@ -9,7 +9,7 @@ namespace CashFlow.Application.Dtos
         public int TransactionType { get; set; }
         public string TransactionTypeDesc { get; set; }
         public DateTime TransactionDate { get; set; }
-        public Guid AccountId { get; set; }
+        public int AccountType { get; set; }
         public string AccountName { get; set; }
         public long AmountCents { get; set; }
         public string Amount { get; set; }
@@ -19,7 +19,7 @@ namespace CashFlow.Application.Dtos
         {
             return new TransactionResponseDto
             {
-                AccountId = transaction.AccountId,
+                AccountType = (int)transaction.AccountType,
                 AccountName = "",
                 AmountCents = transaction.AmountCents,
                 Amount = ((decimal)transaction.AmountCents/100).ToString("C2", CultureInfo.CurrentCulture),

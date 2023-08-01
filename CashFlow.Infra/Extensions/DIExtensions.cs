@@ -13,8 +13,7 @@ namespace CashFlow.Infra.Extensions
         public static IServiceCollection PersistenceConfig(this IServiceCollection services, IConfiguration configuration) 
         {
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            services.AddScoped<ITransactionRespository, TransactionRepository>();
-            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<ITransactionRespository, TransactionRepository>();            
             services.AddScoped<IUserRepository, UserRepository>();
 
             var host = configuration["DBHOST"] ?? "localhost";
