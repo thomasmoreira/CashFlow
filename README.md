@@ -2,7 +2,7 @@
 Serviço para gerenciamento de fluxo de caixa. Com ele, é possível cadastrar lançamentos de crédito e débito e consultar o saldo diário.
 
 ## 🔨 Desenho da arquitetura
-![Capturar](https://github.com/thomasmoreira/CashFlow/assets/109549155/26a27cc6-29fa-4569-9d94-1e3ebdc3b8d7)
+![alt text](https://github.com/thomasmoreira/CashFlow/blob/master/Arquitetura.jpg?raw=true)
 
 ## Padrões de microserviço utilizados
 * Separação em camadas
