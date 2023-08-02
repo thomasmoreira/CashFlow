@@ -75,13 +75,5 @@ namespace CashFlow.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id:guid}")]
-        [Authorize(Roles = "employee, manager")]
-        [ProducesResponseType(typeof(TransactionResponseDto), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetTransactionById([FromRoute] Guid id)
-        {
-            return Ok();
-        }      
-
     }
 }

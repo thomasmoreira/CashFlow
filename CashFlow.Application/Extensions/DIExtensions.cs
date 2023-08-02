@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using CashFlow.Application.Validations.Attributes;
 using Microsoft.OpenApi.Models;
 
 namespace CashFlow.Application.Extensions
@@ -15,7 +14,7 @@ namespace CashFlow.Application.Extensions
         public static IServiceCollection ApplicationConfig(this IServiceCollection services) 
         {                              
 
-            services.AddControllers(o => { o.Filters.Add<ValidateModelStateAttribute>(); })
+            services.AddControllers()
                 .ConfigureApiBehaviorOptions(options =>
                 {
                     options.SuppressModelStateInvalidFilter = true;                    
@@ -26,6 +25,7 @@ namespace CashFlow.Application.Extensions
             services.AddScoped<ITransactionService, TransactionService>();            
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ITokenService, TokenService>();
 
 
             return services;
@@ -60,7 +60,7 @@ namespace CashFlow.Application.Extensions
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Cashflow", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Cashflow Api", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description =

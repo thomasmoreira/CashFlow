@@ -11,11 +11,13 @@ namespace CashFlow.Application.Services
     {
         private readonly IUserService _userService;
         private ILogger<AuthService> _logger;
+        private ITokenService _tokenService;
 
-        public AuthService(IUserService userService, ILogger<AuthService> logger)
+        public AuthService(IUserService userService, ILogger<AuthService> logger, ITokenService tokenService)
         {
             _userService = userService;
             _logger = logger;
+            _tokenService = tokenService;
         }
 
         public async Task<AuthenticateResponseDto> Authenticate(LoginRequestDto loginRequest)
@@ -29,7 +31,7 @@ namespace CashFlow.Application.Services
 
             _logger.LogInformation($"Gerando Token para o usuário {loginRequest.username}");
 
-            var jwtToken = TokenService.GenerateToken(user);
+            var jwtToken = await _tokenService.GenerateToken(user);
 
             _logger.LogInformation($"Token gerado com sucesso para o usuário {loginRequest.username}");
 

@@ -37,8 +37,8 @@ namespace CashFlow.Report.Api.Controllers
 
             var creditTransactions = (await _transactionService.GetTransactions(getTransactionsDto)).Where(t => t.TransactionType == (int)ETransactionType.Credit).ToList();
             var debitTransactions = (await _transactionService.GetTransactions(getTransactionsDto)).Where(t => t.TransactionType == (int)ETransactionType.Debit).ToList();
-            var expenses = debitTransactions.Sum(dt => dt.AmountCents/100);
-            var incomes = creditTransactions.Sum(ct => ct.AmountCents/100);
+            var expenses = debitTransactions.Sum(dt => (double)dt.AmountCents/100);
+            var incomes =  creditTransactions.Sum(ct => (double)ct.AmountCents/100);
 
             var report = new CashFlowReportDto
             {
