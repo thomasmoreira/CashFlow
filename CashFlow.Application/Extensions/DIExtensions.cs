@@ -60,7 +60,7 @@ namespace CashFlow.Application.Extensions
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "APIContagem", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Cashflow", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description =

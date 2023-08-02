@@ -3,9 +3,9 @@ using CashFlow.Application.Services;
 using System.Globalization;
 using CashFlow.Application.Repositories;
 using CashFlow.Infra.Persistence.Repositories;
-using CashFlow.Infra.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Localization;
+using CashFlow.Application.Extensions;
+using CashFlow.Infra.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,23 +28,14 @@ IWebHostEnvironment environment = builder.Environment;
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.JwtConfig();
+builder.Services.SwaggerConfig();
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 
-var host = configuration["DBHOST"] ?? "localhost";
-var port = configuration["DBPORT"] ?? "3306";
-var password = configuration["MYSQL_PASSWORD"] ?? configuration.GetConnectionString("MYSQL_PASSWORD");
-var userid = configuration["MYSQL_USER"] ?? configuration.GetConnectionString("MYSQL_USER");
-var cashflowdb = configuration["MYSQL_DATABASE"] ?? configuration.GetConnectionString("MYSQL_DATABASE");
-
-string mySqlConnStr = $"server={host}; userid={userid};pwd={password};port={port};database={cashflowdb}";
-
-
-builder.Services.AddDbContextPool<CashFlowDbContext>(options =>
-     options.UseMySql(mySqlConnStr,
-     ServerVersion.AutoDetect(mySqlConnStr)));
+builder.Services.PersistenceConfig(configuration);
 
 var app = builder.Build();
 

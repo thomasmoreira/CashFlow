@@ -47,9 +47,9 @@ namespace CashFlow.Application.Services
             return transaction;
         }
 
-        public async Task<ICollection<TransactionResponseDto>> GetTransactions(DateTime date)
+        public async Task<ICollection<TransactionResponseDto>> GetTransactions(GetTransactionsDto getTransactionsDto)
         {
-            var result = await _transactionRepository.ListAsync(t => t.TransactionDate.Date == date.Date);
+            var result = await _transactionRepository.ListAsync(t => t.TransactionDate.Date == getTransactionsDto.TransactionDate.Date);
             return result.Select<Transaction, TransactionResponseDto>(t => t).ToList();
 
         }
