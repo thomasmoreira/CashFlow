@@ -6,7 +6,7 @@ using FluentValidation.TestHelper;
 namespace CashFlow.Tests
 {
     [TestFixture]
-    public class Tests
+    public class TransactionTests
     {
         private AddTransactionValidator validator;
         private AddTransactionDto transactionWithInvalidAmount;

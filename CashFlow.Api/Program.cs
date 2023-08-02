@@ -1,5 +1,4 @@
 using CashFlow.Application.Exceptions;
-using CashFlow.Infra.Persistence;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using CashFlow.Application.Extensions;
@@ -7,6 +6,7 @@ using CashFlow.Infra.Extensions;
 using Serilog;
 using FluentValidation;
 using CashFlow.Application.Validations;
+using CashFlow.Infra.Persistence;
 
 try
 {
@@ -43,7 +43,7 @@ try
 
     builder.Services.JwtConfig();
 
-    builder.Services.AddSwaggerGen();
+    builder.Services.SwaggerConfig();
 
     builder.Services.PersistenceConfig(configuration);
 
@@ -58,6 +58,15 @@ try
         SupportedUICultures = supportedCultures
     });
 
+    app.UseSerilogRequestLogging();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.UseMiddleware<ErrorHandlingMiddleware>();
+
     if (app.Environment.IsDevelopment())
     {
         var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope();
@@ -69,22 +78,13 @@ try
         app.UseSwaggerUI();
     }
 
-    app.UseSerilogRequestLogging();
-
-    app.UseAuthentication();
-    app.UseAuthorization();
-
-    app.MapControllers();
-
-    app.UseMiddleware<ErrorHandlingMiddleware>();
-
     app.Run();
 }
 catch (Exception ex)
 {
 
     if (Log.Logger == null || Log.Logger.GetType().Name == "SilentLogger")
-    {        
+    {
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .WriteTo.Console()

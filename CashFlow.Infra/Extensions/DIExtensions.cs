@@ -28,5 +28,25 @@ namespace CashFlow.Infra.Extensions
 
             return services;
         }
+
+        public static IServiceCollection LoggingConfig(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+
+            var host = configuration["DBHOST"] ?? "localhost";
+            var port = configuration["DBPORT"] ?? "3306";
+            var password = configuration["MYSQL_PASSWORD"] ?? configuration.GetConnectionString("MYSQL_PASSWORD");
+            var userid = configuration["MYSQL_USER"] ?? configuration.GetConnectionString("MYSQL_USER");
+            var cashflowdb = configuration["MYSQL_DATABASE"] ?? configuration.GetConnectionString("MYSQL_DATABASE");
+
+            string mySqlConnStr = $"server={host}; userid={userid};pwd={password};port={port};database={cashflowdb}";
+
+            services.AddDbContextPool<CashFlowDbContext>(options =>
+                 options.UseMySql(mySqlConnStr,
+                 ServerVersion.AutoDetect(mySqlConnStr)));
+
+
+            return services;
+        }
     }
 }

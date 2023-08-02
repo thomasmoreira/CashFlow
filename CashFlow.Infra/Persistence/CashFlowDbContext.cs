@@ -8,8 +8,7 @@ namespace CashFlow.Infra.Persistence
     public class CashFlowDbContext : DbContext, ICashFlowDbContext
     {
         public CashFlowDbContext(DbContextOptions<CashFlowDbContext> options) : base(options) 
-        {
-            this.Database.EnsureCreated();            
+        {            
         }
 
         #region DbSets
